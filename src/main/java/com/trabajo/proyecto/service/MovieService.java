@@ -1,6 +1,7 @@
 package com.trabajo.proyecto.service;
 
 import com.trabajo.proyecto.exception.DocumentalAnd1920Exception;
+import com.trabajo.proyecto.exception.MovieNotFoundException;
 import com.trabajo.proyecto.exception.TitleAndDirectorExisteException;
 import com.trabajo.proyecto.model.Movie;
 import com.trabajo.proyecto.repository.MovieRepository;
@@ -34,9 +35,9 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public Optional<Movie> findById(Long id)
+    public Movie findById(Long id)
     {
-        return movieRepository.findById(id);
+        return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException("Pelicula no encontrada"));
     }
 
     public List<Movie> listAllMovies()

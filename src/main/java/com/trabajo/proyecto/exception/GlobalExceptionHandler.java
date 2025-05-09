@@ -1,13 +1,15 @@
 package com.trabajo.proyecto.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -27,12 +29,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TitleAndDirectorExisteException.class)
     public ResponseEntity<String> handleTitleAndDirectorExisteException(TitleAndDirectorExisteException ex)
     {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
     @ExceptionHandler(DocumentalAnd1920Exception.class)
     public ResponseEntity<String> handleDocumentalAnd1920Exception(DocumentalAnd1920Exception ex)
     {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MovieNotFoundException.class)
+    public ResponseEntity<String> handleMovieNotFoundException(MovieNotFoundException ex)
+    {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

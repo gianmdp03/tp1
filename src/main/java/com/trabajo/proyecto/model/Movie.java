@@ -21,7 +21,6 @@ public class Movie {
     @Column(nullable=false)
     private String director;
 
-    @Size(min=1895, max=2027)
     @NotNull
     @Column(nullable = false)
     private Integer releaseYear;
